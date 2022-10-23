@@ -1,0 +1,7 @@
+@mixin rwd($size) {
+  @if $size == m {
+    @media (min-width: 900px) {
+      @content;
+    }
+  }
+}

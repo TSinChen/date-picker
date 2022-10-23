@@ -1,0 +1,257 @@
+@import "./reset";
+@import "./variables";
+@import "./mixins";
+
+.container {
+  position: relative;
+  background-color: $color-blue-1;
+  padding: 15px;
+
+  @include rwd(m) {
+    padding: 15px calc((100% - 600px) / 2);
+  }
+
+  > :not(:last-child) {
+    margin-bottom: 15px;
+  }
+
+  .result {
+    background-color: #fff;
+    padding: 20px 30px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    & > *:not(:last-child) {
+      margin-right: 30px;
+    }
+
+    &__arrow {
+      background-color: $color-blue-2;
+      padding: 4px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+    }
+
+    &__label {
+      color: #555;
+    }
+
+    &__value {
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
+
+  .tabs {
+    display: flex;
+    justify-content: space-between;
+
+    &__tab {
+      background-color: #fff;
+      width: 30%;
+      padding: 10px 0;
+      border-radius: 5px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+
+      &.active {
+        background-color: $color-blue-2;
+        color: #fff;
+      }
+    }
+  }
+}
+
+.picker {
+  position: absolute;
+  background-color: $color-white-1;
+  top: -100vh;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  transition: top 0.5s;
+
+  @include rwd(m) {
+    width: 600px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &.active {
+    top: 0;
+  }
+
+  &__close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 25px;
+    cursor: pointer;
+  }
+
+  .result {
+    background-color: $color-blue-1;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @include rwd(m) {
+      padding: 52.5px 30px;
+    }
+
+    & > *:not(:last-child) {
+      margin-right: 30px;
+    }
+
+    &__arrow {
+      background-color: $color-blue-2;
+      padding: 4px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+    }
+
+    &__label {
+      color: #eee;
+    }
+
+    &__value {
+      color: #fff;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
+
+  &__header {
+    background-color: $color-blue-1;
+    display: flex;
+    color: #eee;
+
+    & > * {
+      width: calc(100% / 7);
+      text-align: center;
+    }
+  }
+
+  &__calendars {
+    height: calc(100vh - 200px);
+    overflow-y: scroll;
+
+    @include rwd(m) {
+      height: calc(100vh - 270px);
+    }
+  }
+
+  &__submit {
+    background-color: $color-blue-1;
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    width: 80%;
+    padding: 20px 0;
+    color: #fff;
+    text-align: center;
+    border-radius: 10px;
+    transform: translateX(-50%);
+    cursor: pointer;
+    box-shadow: 0 5px 10px #aaa;
+  }
+}
+
+.calendar {
+  &__header {
+    background-color: #ebebeb;
+    width: 100%;
+    margin-bottom: 5px;
+    padding: 5px 0;
+    text-align: center;
+  }
+
+  &__table {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__date {
+    position: relative;
+    display: flex;
+    margin: 5px 0;
+    width: calc(100% / 7);
+    height: $date-item-height;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+
+    @include rwd(m) {
+      cursor: pointer;
+    }
+
+    &--today,
+    &--selected {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: $date-item-height;
+      height: $date-item-height;
+      color: #fff;
+      font-weight: bold;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &--today {
+      border: 1px solid $color-blue-2;
+      z-index: 10;
+    }
+
+    &--selected {
+      background-color: $color-blue-1;
+      z-index: 11;
+    }
+
+    &.inRange {
+      background-color: $color-blue-2;
+    }
+
+    &.start,
+    &.end {
+      position: relative;
+
+      &::after {
+        position: absolute;
+        content: "";
+        top: 0;
+        left: 50%;
+        width: 50%;
+        height: 100%;
+      }
+    }
+
+    &.start::after {
+      background-color: $color-blue-2;
+    }
+
+    &.end::after {
+      background-color: $color-white-1;
+    }
+  }
+}
+
+.data {
+  padding: 50px 0;
+  font-size: 24px;
+  text-align: center;
+
+  & > *:not(:last-child) {
+    margin: 30px;
+  }
+}
